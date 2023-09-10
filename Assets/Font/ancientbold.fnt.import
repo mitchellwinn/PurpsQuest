@@ -1,0 +1,16 @@
+[remap]
+
+importer="font_data_bmfont"
+type="FontFile"
+uid="uid://cg3s0857g2kwc"
+path="res://.godot/imported/ancientbold.fnt-f0313f6d458e82a49271ba82ff3000c0.fontdata"
+
+[deps]
+
+source_file="res://Assets/Font/ancientbold.fnt"
+dest_files=["res://.godot/imported/ancientbold.fnt-f0313f6d458e82a49271ba82ff3000c0.fontdata"]
+
+[params]
+
+fallbacks=[]
+compress=true

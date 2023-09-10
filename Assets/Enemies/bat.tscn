@@ -1,0 +1,88 @@
+[gd_scene load_steps=9 format=3 uid="uid://y4w2384cockm"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/Bat.gd" id="1_daaps"]
+[ext_resource type="Texture2D" uid="uid://w2imaemlwsb8" path="res://Assets/2D/bat-Sheet.png" id="2_sqvjq"]
+[ext_resource type="Script" path="res://Assets/Scripts/Stats.gd" id="3_20bdu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yober"]
+size = Vector2(13.94, 16.27)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_471p6"]
+size = Vector2(19.6891, 8.7156)
+
+[sub_resource type="Animation" id="Animation_atbdk"]
+resource_name = "hang"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_yor67"]
+resource_name = "fly"
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_utjeu"]
+_data = {
+"fly": SubResource("Animation_yor67"),
+"hang": SubResource("Animation_atbdk")
+}
+
+[node name="Bat" type="CharacterBody2D"]
+position = Vector2(2.06, -18.73)
+collision_layer = 32768
+collision_mask = 0
+script = ExtResource("1_daaps")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-2.06, 5.73)
+texture = ExtResource("2_sqvjq")
+hframes = 6
+frame = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2.06, 10.865)
+shape = SubResource("RectangleShape2D_yober")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 32768
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-2.56, 10.23)
+scale = Vector2(0.965, 2.18)
+shape = SubResource("RectangleShape2D_471p6")
+debug_color = Color(0.980392, 0, 0.380392, 0.419608)
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("3_20bdu")
+maxHP = 1
+hp = 1
+damage = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite")
+speed_scale = 3.5
+libraries = {
+"": SubResource("AnimationLibrary_utjeu")
+}

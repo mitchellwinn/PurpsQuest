@@ -1,0 +1,465 @@
+[gd_scene load_steps=26 format=3 uid="uid://cjupg1tdcc582"]
+
+[ext_resource type="Texture2D" uid="uid://b1bua5qijv7hm" path="res://Assets/2D/textBox.png" id="1_p7785"]
+[ext_resource type="Script" path="res://Assets/Scripts/TextBox.gd" id="2_x5s2w"]
+[ext_resource type="FontFile" uid="uid://cg3s0857g2kwc" path="res://Assets/Font/ancientbold.fnt" id="3_cyagu"]
+[ext_resource type="Shader" path="res://Assets/Shader/wiggle.gdshader" id="3_rws2h"]
+[ext_resource type="FontFile" uid="uid://tmtcwha3saq0" path="res://Assets/Font/ancientitalics.fnt" id="4_8c2iq"]
+[ext_resource type="Texture2D" uid="uid://5lpj2r7k2jxg" path="res://Assets/2D/faceHealth.png" id="5_eh2h6"]
+[ext_resource type="Texture2D" uid="uid://cgcxyv1ugjit1" path="res://Assets/2D/HP-Sheet.png" id="6_144fb"]
+[ext_resource type="Texture2D" uid="uid://bikgofcekt3y6" path="res://Assets/2D/zorloroHappy.png" id="8_spmev"]
+[ext_resource type="Texture2D" uid="uid://dxk4al3uq18m" path="res://Assets/2D/MP-Sheet.png" id="9_aktsw"]
+[ext_resource type="Texture2D" uid="uid://ci27tndh5fqi1" path="res://Assets/2D/receive-Sheet.png" id="9_ichti"]
+[ext_resource type="Script" path="res://Assets/Scripts/FrameScroll.gd" id="10_aohjx"]
+[ext_resource type="Texture2D" uid="uid://f42k23qeqrv4" path="res://Assets/2D/receive-Hands.png" id="11_0ogjl"]
+[ext_resource type="Shader" path="res://Assets/Shader/PaletteSwap/changeColorTo.gdshader" id="12_w6fqv"]
+[ext_resource type="Texture2D" uid="uid://cf2a06wrkvwhg" path="res://Assets/2D/bigsword-Sheet.png" id="12_wa6q6"]
+[ext_resource type="Texture2D" uid="uid://cbj1mpgx32kll" path="res://Assets/2D/itemholder.png" id="14_0uset"]
+[ext_resource type="Texture2D" uid="uid://ktu80cvrdsk1" path="res://Assets/2D/thornchakramSHeet.png" id="15_q82lo"]
+[ext_resource type="Texture2D" uid="uid://fswsbridjmu8" path="res://Assets/2D/receiveaxe-Sheet.png" id="15_rd3lx"]
+[ext_resource type="Texture2D" uid="uid://qutvxa63blcm" path="res://Assets/2D/receiveGlove.png" id="16_c23ra"]
+[ext_resource type="Texture2D" uid="uid://den1sdholldoo" path="res://Assets/2D/axe.png" id="17_r4brh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i05l3"]
+shader = ExtResource("3_rws2h")
+shader_parameter/Strength = 0.0
+shader_parameter/RandomOffset = 1.0
+
+[sub_resource type="Animation" id="Animation_j2mkf"]
+resource_name = "Receive"
+length = 3.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../ReceiveCloseup/Receive2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.4, 1.4, 3),
+"transitions": PackedFloat32Array(2.07053, 0.435275, 1),
+"update": 0,
+"values": [Vector2(240, 135), Vector2(240, 132.131), Vector2(240, 126)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../ReceiveCloseup/Receive2:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4, 1.4, 3),
+"transitions": PackedFloat32Array(2.07053, 0.435275, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.968127, 0.968127), Vector2(0.9, 0.9)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../../ReceiveCloseup/Receive3:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.8, 3),
+"transitions": PackedFloat32Array(4.43828, 0.189465, 1),
+"update": 0,
+"values": [Vector2(240, 33), Vector2(240, 100.084), Vector2(240, 171)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../../ReceiveCloseup/Receive3:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(2.2, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.020944]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../../ReceiveCloseup:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 3.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../../ReceiveCloseup/Receiveaxe:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(240, -100)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../../ReceiveCloseup/ReceiveGlove:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(240, -100)]
+}
+
+[sub_resource type="Animation" id="Animation_47i1a"]
+resource_name = "ReceieveAxe"
+length = 3.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../ReceiveCloseup/Receive2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.4, 1.4, 3),
+"transitions": PackedFloat32Array(2.07053, 0.435275, 1),
+"update": 0,
+"values": [Vector2(240, 135), Vector2(240, 132.131), Vector2(240, 126)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../ReceiveCloseup/Receive2:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4, 1.4, 3),
+"transitions": PackedFloat32Array(2.07053, 0.435275, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.968127, 0.968127), Vector2(0.9, 0.9)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../../ReceiveCloseup/Receive3:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(4.43828),
+"update": 0,
+"values": [Vector2(240, -50)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../../ReceiveCloseup/Receive3:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(2.2, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.020944]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../../ReceiveCloseup:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 3.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../../ReceiveCloseup/Receiveaxe:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(240, 33), Vector2(240, 150)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../../ReceiveCloseup/ReceiveGlove:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(240, -100)]
+}
+
+[sub_resource type="Animation" id="Animation_owngw"]
+resource_name = "ReceiveGlove"
+length = 3.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../ReceiveCloseup/Receive2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.4, 1.4, 3),
+"transitions": PackedFloat32Array(2.07053, 0.435275, 1),
+"update": 0,
+"values": [Vector2(240, 135), Vector2(240, 132.131), Vector2(240, 126)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../ReceiveCloseup/Receive2:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4, 1.4, 3),
+"transitions": PackedFloat32Array(2.07053, 0.435275, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.968127, 0.968127), Vector2(0.9, 0.9)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../../ReceiveCloseup/Receive3:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(4.43828),
+"update": 0,
+"values": [Vector2(240, -50)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../../ReceiveCloseup/Receive3:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(2.2, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.020944]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../../ReceiveCloseup:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 3.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../../ReceiveCloseup/Receiveaxe:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(240, -100)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../../ReceiveCloseup/ReceiveGlove:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 3.4),
+"transitions": PackedFloat32Array(0.267943, 0.307786),
+"update": 0,
+"values": [Vector2(240, 49), Vector2(240, 146)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wvan4"]
+_data = {
+"Receive": SubResource("Animation_j2mkf"),
+"ReceiveAxe": SubResource("Animation_47i1a"),
+"ReceiveGlove": SubResource("Animation_owngw")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h4spw"]
+shader = ExtResource("12_w6fqv")
+shader_parameter/numberOfColors = 6
+shader_parameter/C1 = Color(0.664063, 0.996094, 0.996094, 1)
+shader_parameter/C2 = Color(0.332031, 0.332031, 0.996094, 1)
+shader_parameter/C3 = Color(0.664063, 0.664063, 0.664063, 1)
+shader_parameter/C4 = Color(0.332031, 0.332031, 0.332031, 1)
+shader_parameter/C5 = Color(0.664063, 0.332031, 0.996094, 1)
+shader_parameter/C6 = Color(0, 0, 0.996094, 1)
+shader_parameter/T1 = Color(0.660156, 0.992188, 0.992188, 1)
+shader_parameter/T2 = Color(0.332031, 0.332031, 0.992188, 1)
+shader_parameter/T3 = Color(0.660156, 0.660156, 0.660156, 1)
+shader_parameter/T4 = Color(0.332031, 0.332031, 0.332031, 1)
+shader_parameter/T5 = Color(0.660156, 0.332031, 0.992188, 1)
+shader_parameter/T6 = Color(0, 0, 0.992188, 1)
+
+[node name="UI" type="CanvasLayer"]
+
+[node name="TextBox" type="Sprite2D" parent="."]
+texture_filter = 3
+position = Vector2(240, 35)
+texture = ExtResource("1_p7785")
+script = ExtResource("2_x5s2w")
+
+[node name="Face" type="Sprite2D" parent="TextBox"]
+texture_filter = 1
+position = Vector2(-202, 0)
+texture = ExtResource("8_spmev")
+
+[node name="Text" type="RichTextLabel" parent="TextBox"]
+z_index = 1
+texture_filter = 3
+material = SubResource("ShaderMaterial_i05l3")
+clip_contents = false
+offset_left = -227.0
+offset_top = -23.0
+offset_right = 226.0
+offset_bottom = 69.0
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_fonts/normal_font = ExtResource("3_cyagu")
+theme_override_fonts/italics_font = ExtResource("4_8c2iq")
+bbcode_enabled = true
+text = "A quick writing test. [i]test[/i]A quick writing test. [i]test[/i]A quick writing test. [i]test[/i]A quick writing test. [i]test[/i]"
+
+[node name="Face" type="Sprite2D" parent="."]
+z_index = -1
+texture_filter = 1
+position = Vector2(40, 40)
+texture = ExtResource("5_eh2h6")
+
+[node name="HP" type="Sprite2D" parent="."]
+z_index = -2
+texture_filter = 1
+position = Vector2(40, 40)
+texture = ExtResource("6_144fb")
+hframes = 21
+
+[node name="MP" type="Sprite2D" parent="."]
+z_index = -2
+texture_filter = 1
+position = Vector2(40, 40)
+texture = ExtResource("9_aktsw")
+hframes = 24
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../TextBox/Text")
+libraries = {
+"": SubResource("AnimationLibrary_wvan4")
+}
+
+[node name="ReceiveCloseup" type="Node2D" parent="."]
+visible = false
+
+[node name="Receive" type="Sprite2D" parent="ReceiveCloseup"]
+z_index = 5
+texture_filter = 1
+position = Vector2(240, 135)
+texture = ExtResource("9_ichti")
+hframes = 4
+script = ExtResource("10_aohjx")
+delay = 0.2
+
+[node name="Receive2" type="Sprite2D" parent="ReceiveCloseup"]
+z_index = 10
+texture_filter = 1
+position = Vector2(240, 126)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("11_0ogjl")
+hframes = 4
+script = ExtResource("10_aohjx")
+delay = 0.2
+
+[node name="Receive3" type="Sprite2D" parent="ReceiveCloseup"]
+z_index = 7
+texture_filter = 1
+material = SubResource("ShaderMaterial_h4spw")
+position = Vector2(240, 171)
+rotation = 0.020944
+texture = ExtResource("12_wa6q6")
+hframes = 4
+script = ExtResource("10_aohjx")
+delay = 0.2
+
+[node name="Receiveaxe" type="Sprite2D" parent="ReceiveCloseup"]
+z_index = 7
+texture_filter = 1
+material = SubResource("ShaderMaterial_h4spw")
+position = Vector2(240, -100)
+texture = ExtResource("15_rd3lx")
+hframes = 4
+script = ExtResource("10_aohjx")
+delay = 0.2
+
+[node name="ReceiveGlove" type="Sprite2D" parent="ReceiveCloseup"]
+z_index = 7
+texture_filter = 1
+material = SubResource("ShaderMaterial_h4spw")
+position = Vector2(240, -100)
+texture = ExtResource("16_c23ra")
+hframes = 4
+script = ExtResource("10_aohjx")
+delay = 0.2
+
+[node name="ItemHolder" type="Sprite2D" parent="."]
+z_index = -2
+texture_filter = 1
+position = Vector2(91, 22)
+texture = ExtResource("14_0uset")
+
+[node name="Chakram" type="Sprite2D" parent="."]
+visible = false
+z_index = -1
+texture_filter = 1
+position = Vector2(90, 21)
+texture = ExtResource("15_q82lo")
+hframes = 8
+
+[node name="Axe" type="Sprite2D" parent="."]
+visible = false
+z_index = -1
+texture_filter = 1
+position = Vector2(90, 21)
+texture = ExtResource("17_r4brh")
+
+[node name="Knife" type="Sprite2D" parent="."]
+visible = false
+z_index = -1
+texture_filter = 1
+position = Vector2(90, 21)
+texture = ExtResource("15_q82lo")
+hframes = 8
+
+[node name="BowArrow" type="Sprite2D" parent="."]
+visible = false
+z_index = -1
+texture_filter = 1
+position = Vector2(90, 21)
+texture = ExtResource("15_q82lo")
+hframes = 8
+
+[node name="TetherShot" type="Sprite2D" parent="."]
+visible = false
+z_index = -1
+texture_filter = 1
+position = Vector2(90, 21)
+texture = ExtResource("15_q82lo")
+hframes = 8

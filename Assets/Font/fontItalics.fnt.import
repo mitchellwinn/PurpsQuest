@@ -1,0 +1,16 @@
+[remap]
+
+importer="font_data_bmfont"
+type="FontFile"
+uid="uid://bmgmu4hpvwut7"
+path="res://.godot/imported/fontItalics.fnt-f01cb53aa7c633b183f50a54f7f96492.fontdata"
+
+[deps]
+
+source_file="res://Assets/Font/fontItalics.fnt"
+dest_files=["res://.godot/imported/fontItalics.fnt-f01cb53aa7c633b183f50a54f7f96492.fontdata"]
+
+[params]
+
+fallbacks=[]
+compress=true

@@ -1,0 +1,16 @@
+[remap]
+
+importer="font_data_bmfont"
+type="FontFile"
+uid="uid://tmtcwha3saq0"
+path="res://.godot/imported/ancientitalics.fnt-8982bb9af31d8a5c1999fce59e0be70f.fontdata"
+
+[deps]
+
+source_file="res://Assets/Font/ancientitalics.fnt"
+dest_files=["res://.godot/imported/ancientitalics.fnt-8982bb9af31d8a5c1999fce59e0be70f.fontdata"]
+
+[params]
+
+fallbacks=[]
+compress=true
