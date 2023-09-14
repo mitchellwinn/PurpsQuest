@@ -158,13 +158,14 @@ func checkDamage():
 				elif !General.itemResolved:
 					takeDamage(player,"throwItem")
 					return
+	
 			
 func takeDamage(attacker,attack):
 	#print("Took damage from "+attack)
-	if attack != "diveKick":
-		$Stats.hp-=attacker.get_node("Stats").damage
+	if attack != "diveKick" and attack != "slideKick":
+		$Stats.hp-=attacker.get_node("Stats").damage*(Keys.swordStrength()+1)/3+ceil(attacker.get_node("Stats").damage/2)
 	else:
-		$Stats.hp-=round(attacker.get_node("Stats").damage/2)
+		$Stats.hp-=ceil(attacker.get_node("Stats").damage/2)
 	attacker.get_node("SFXslash").play()
 	attacker.hitConfirm=true
 	usingAttack = false
@@ -189,7 +190,7 @@ func die():
 		dead=true
 		await get_tree().create_timer(.1*deathLength).timeout
 		for n in range(deathLength):
-			General.screenImpact(.03)
+			General.screenImpact(.08)
 			var thisexplode = explode.instantiate()
 			get_node("/root/World").add_child(thisexplode)
 			thisexplode.global_position = global_position+RandomNumberGenerator.new().randi_range(-10,10)*deathLength*Vector2(1,1)

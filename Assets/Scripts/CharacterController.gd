@@ -25,6 +25,7 @@ var hpShowFrame = 20.0
 var mpShowFrame = 20.0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var waterSlowdown = 1.0
+var iframes = 0
 
 func _ready():
 	$Guy/Afterimage.emitting = false
@@ -55,6 +56,10 @@ func move(delta):
 		stun-=delta
 	else:
 		stun=0
+	if iframes>0:
+		iframes-=delta
+	else:
+		iframes=0
 	if not is_on_floor():
 		if onFloorLastFrame:
 			jumpDir = velocity.normalized().x
@@ -135,6 +140,7 @@ func move(delta):
 		$SlashHitbox/CollisionShape2D.disabled = true
 		$LungeHitbox/CollisionShape2D.disabled = true
 		$DiveHitbox/CollisionShape2D.disabled = true
+		$SlideHitbox/CollisionShape2D.disabled = true
 
 func get_distance_to_floor():
 	var distance = 0
@@ -155,6 +161,8 @@ func hasControl():
 	if !TextEngine.messageStatus and !usingSpecialMove and !usingAttack and stun<=0 and !dead and !General.cutsceneActive:
 		return true
 	else:
+		if stun:
+			usingAttack = false
 		return false
 
 func specialMove(delta):
@@ -167,7 +175,9 @@ func attack(delta):
 		if PlayerInputs.up:
 				throwItem(delta)
 		if !is_on_floor():
-			airSlash(delta)
+				airSlash(delta)
+		elif crouching and Keys.canSlideKick:
+			slideKick(delta)
 		elif !usingSpecialMove:
 			slash(delta)
 		elif currentSpecialMove == "moonwalk" && usingSpecialMove:
@@ -319,6 +329,49 @@ func lunge(delta):
 	usingAttack = false
 	hitConfirm = false
 
+func slideKick(delta):
+	usingSpecialMove = false
+	if !hasControl:
+		return
+	await nextFrame
+	$Guy/Afterimage.emitting = true
+	currentAttack = "slideKick"
+	usingAttack = true
+	var dir = facingVector
+	var timer = 0
+	var decaySpeed = SPEED
+	var jumpBooster = 1
+	var initialFacing = facingVector
+	var initialFlip = $Guy.flip_h
+	var dir2 = 1
+	velocity.x = dir.x * decaySpeed * 3 * dir2
+	while((timer<.75 or $CrouchCast.is_colliding()) and usingAttack and ((PlayerInputs.down or $CrouchCast.is_colliding()) or timer<.3)):
+		$SlideHitbox/CollisionShape2D.disabled = false
+		if velocity.x==0:
+			dir2=dir2*-1
+			facingVector.x = facingVector.x*-1
+			direction = direction*-1
+			$Guy.flip_h = !$Guy.flip_h
+		velocity.x = dir.x * decaySpeed * 3 * dir2
+		timer+=delta*(1+Keys.swordStrength()/4)
+		decaySpeed-=(delta*SPEED)
+		#$LungeHitbox.scale.x = $LungeHitbox.scale.x*1000
+		if $CrouchCast.is_colliding():
+			velocity.x = dir.x * SPEED * 3 * dir2
+		if timer>.5 and (PlayerInputs.attack or $CrouchCast.is_colliding()):
+			timer = 0
+			decaySpeed = SPEED
+			hitConfirm = false
+			$AnimationPlayer.seek(0)
+		await nextFrame
+	$Guy/Afterimage.emitting = false
+	$AnimationPlayer.play("crouch")
+	$AnimationPlayer.seek(1)
+	direction = velocity.normalized().x
+	jumpDir = velocity.normalized().x
+	usingAttack = false
+	hitConfirm = false
+
 func airSlash(delta):
 	if currentSpecialMove == "moonwalk":
 		usingSpecialMove = false
@@ -389,6 +442,12 @@ func animate(delta):
 	$Guy/CapeHolder/Cape.skew = $Guy/CapeHolder/Cape.rotation/4
 	$Guy.visible = true
 	$Guy.modulate = Color(1,1,1,1)
+	if iframes>0 and stun<=0:
+		if Time.get_ticks_msec()%10<5:
+			$Guy.visible = false
+		else:
+			$Guy.visible = true
+			$Guy.modulate = Color(1,1,1,1)
 	if dead:
 		$AnimationPlayer.play("stun")
 	elif stun>0:
@@ -396,7 +455,7 @@ func animate(delta):
 			$Guy.visible = false
 		else:
 			$Guy.visible = true
-			$Guy.modulate = Color(0,0,1,1)
+			$Guy.modulate = Color(1,0,0,1)
 		$AnimationPlayer.play("stun")
 	elif is_on_wall() and velocity.y>10 and Keys.canWalljump:
 		if facingString == whichWall():
@@ -418,12 +477,14 @@ func animate(delta):
 		if velocity.length()>.1:
 			$AnimationPlayer.play("walk")
 			$AnimationPlayer.speed_scale = abs(velocity.x)/100
-		elif velocity.length()<.1 and crouching:
+		elif velocity.length()<.1 and crouching and $AnimationPlayer.current_animation != "crouch":
+			$AnimationPlayer.speed_scale = 2
 			$AnimationPlayer.play("crouch")
 		elif velocity.length()<.1 and !crouching:
-			if $AnimationPlayer.playing == "crouch":
+			if $AnimationPlayer.current_animation == "crouch":
 				$AnimationPlayer.play("uncrouch")
-			elif $AnimationPlayer.playing != "uncrouch":
+				$AnimationPlayer.speed_scale = 2
+			elif $AnimationPlayer.current_animation != "uncrouch":
 				$AnimationPlayer.play("stand")
 	else:
 		if velocity.y<=0:
@@ -445,7 +506,9 @@ func animate(delta):
 	#print(round(hpShowFrame))
 
 func _on_hurt_box_area_entered(area):
-	if area.get_parent().dead or dead or stun>0 or area.get_parent().stun>0 or area.get_parent().suspension>0 or General.cutsceneActive:
+	if !area.get_parent().get_node("Stats"):
+		return
+	if area.get_parent().dead or dead or iframes>0 or area.get_parent().stun>0 or area.get_parent().suspension>0 or General.cutsceneActive:
 		return
 	takeDamage(area)
 
@@ -455,6 +518,7 @@ func takeDamage(area):
 	usingAttack = false
 	direction = 0
 	stun = 0.5
+	iframes = 1
 	var horizontalKB = Vector2(2,0)
 	if global_position.x<area.get_parent().global_position.x:
 		horizontalKB = Vector2(-2,0)
@@ -494,6 +558,8 @@ func die():
 		get_node("/root/World/GeneralText").dialogueTreeKey = 0
 		get_node("/root/World/GeneralText").interaction = 0
 		get_node("/root/World/UI/TextBox/Text").get_material().set_shader_parameter("Strength",2)
+		get_node("/root/World/GeneralText").interaction = 0
+		get_node("/root/World/GeneralText").dialogueTreeKey= 0
 		TextEngine.go(get_node("/root/World/GeneralText"))
 		while !confirm or timer< 2:
 			if PlayerInputs.attack or PlayerInputs.jump:
@@ -502,7 +568,7 @@ func die():
 			timer+=General.thisDelta
 		$Guy.visible = true
 		$Guy.self_modulate = Color(1,1,1,1)
-		global_position = General.saveLocation
+		#global_position = General.saveLocation
 		$Stats.hp = $Stats.maxHP
 		dead=false
 		get_node("/root/World/Map").visible = true
@@ -512,6 +578,8 @@ func die():
 		get_node("/root/World/UI/TextBox/Text").self_modulate = Color(1,1,1,1)
 		General.activeCam.get_node("flames").visible = false
 		confirm = false
+		General.data.load(General.SAVE_PATH)
+		General.loadData(General.data)
 
 
 func _on_slime_boss_arena_body_entered(body):

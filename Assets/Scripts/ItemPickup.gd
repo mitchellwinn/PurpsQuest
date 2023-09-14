@@ -25,19 +25,32 @@ func _on_body_entered(body):
 		await get_tree().create_timer(1.0).timeout
 		General.cutsceneActive = false
 		General.animatorOn = true
-		queue_free()
 	elif body.name == "Player" and item=="StickyGlove":
 		Keys.stickyGlove=true
 		itemGetCutscene("ReceiveGlove")
 		await get_tree().create_timer(3.5).timeout
 		General.cutsceneActive = false
-		queue_free()
 	elif body.name == "Player" and item=="Axe":
 		Keys.items[1]=1
 		itemGetCutscene("ReceiveAxe")
 		await get_tree().create_timer(3.5).timeout
 		General.cutsceneActive = false
-		queue_free()
+	elif body.name == "Player" and item=="Chakram":
+		Keys.items[0]=1
+		itemGetCutscene("ReceiveChakram")
+		await get_tree().create_timer(3.5).timeout
+		General.cutsceneActive = false
+	if General.checkNoItems():
+		General.iterateCurrentItem()
+	if Keys.itemCount()==1:
+		get_node("/root/World/GeneralText").interaction = 0
+		get_node("/root/World/GeneralText").dialogueTreeKey= 1
+		TextEngine.go(get_node("/root/World/GeneralText"))
+	if Keys.swordStrength()==1:
+		get_node("/root/World/GeneralText").interaction = 0
+		get_node("/root/World/GeneralText").dialogueTreeKey= 2
+		TextEngine.go(get_node("/root/World/GeneralText"))
+	queue_free()
 		
 func itemGetCutscene(itemAnimation):
 	#print("OKAY")

@@ -98,6 +98,7 @@ func jumpAttack():
 func checkWarp():
 	if $Area2D.get_overlapping_areas().size()>0 and !lastWarp:
 		if $Area2D.get_overlapping_areas()[0].collision_layer==8:
+			print("good")
 			lastWarp = true
 			var pick = RandomNumberGenerator.new().randi_range(0,3)
 			var pickposition = Vector2.ZERO
@@ -125,5 +126,9 @@ func checkWarp():
 			splash.global_position = pickposition+Vector2(0,20)
 			get_node("/root/World/Map").add_child(splash)
 			global_position =  pickposition
-		elif $Area2D.get_overlapping_areas().size() == 0:
-			lastWarp = false
+			jumpAttack()
+	elif $Area2D.get_overlapping_areas().size() == 0:
+		lastWarp = false
+	elif $Area2D.get_overlapping_areas().size()>0 and lastWarp:
+		if $Area2D.get_overlapping_areas()[0].collision_layer==8:
+			print("bad")

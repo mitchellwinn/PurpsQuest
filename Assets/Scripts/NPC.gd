@@ -13,6 +13,9 @@ signal nextFrame
 func _ready():
 	if get_parent().name=="Zorloro":
 		get_parent().get_node("AnimationPlayer").play("stand")
+	if get_parent().name=="Zorloro2":
+		#get_parent().get_node("AnimationPlayer").play("stand")
+		pass
 	
 func _physics_process(delta):
 	if name ==  "GeneralText":
@@ -31,6 +34,7 @@ func _physics_process(delta):
 			return
 		if targetOnTouch:
 			TextEngine.target = self
+			print("targetNPC")
 		get_node("/root/World/TextPrinter").stream = load("res://Assets/SFX/signText.wav")
 		get_node("/root/World/TextPrinter").stream = load(printSound)
 	nextFrame.emit()

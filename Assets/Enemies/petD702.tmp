@@ -1,0 +1,198 @@
+[gd_scene load_steps=10 format=3 uid="uid://b1l084qrh8lok"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/PetalPelt.gd" id="1_j3w6i"]
+[ext_resource type="Texture2D" uid="uid://c77gpxhgisl8o" path="res://Assets/2D/flowerbosasbase.png" id="2_j10q8"]
+[ext_resource type="Script" path="res://Assets/Scripts/Stats.gd" id="3_132wp"]
+[ext_resource type="Texture2D" uid="uid://bxkyst0etyj48" path="res://Assets/2D/leaf.png" id="4_bgqkb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yober"]
+size = Vector2(13.94, 16.27)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fqn17"]
+radius = 58.4637
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n1x6s"]
+radius = 39.7
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_utjeu"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y4fdr"]
+radius = 28.2
+height = 89.65
+
+[node name="PetalPelt" type="CharacterBody2D"]
+position = Vector2(2.06, -18.73)
+collision_layer = 32768
+collision_mask = 0
+script = ExtResource("1_j3w6i")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+z_index = 1
+texture_filter = 1
+texture = ExtResource("2_j10q8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2.06, 10.865)
+shape = SubResource("RectangleShape2D_yober")
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+z_index = 10
+position = Vector2(-1.06, -2.27)
+shape = SubResource("CircleShape2D_fqn17")
+debug_color = Color(0.980392, 0, 0.380392, 0.419608)
+
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 32768
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+z_index = 10
+position = Vector2(-1.06, -2.27)
+shape = SubResource("CircleShape2D_n1x6s")
+one_way_collision_margin = 0.0
+debug_color = Color(0.980392, 0, 0.380392, 0.419608)
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("3_132wp")
+maxHP = 30
+hp = 1
+damage = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite")
+speed_scale = 3.5
+libraries = {
+"": SubResource("AnimationLibrary_utjeu")
+}
+
+[node name="Petal1" type="Area2D" parent="."]
+position = Vector2(25.94, -91.27)
+collision_layer = 32768
+collision_mask = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Petal1"]
+texture_filter = 1
+texture = ExtResource("4_bgqkb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Petal1"]
+position = Vector2(0, 8)
+rotation = 0.217334
+shape = SubResource("CapsuleShape2D_y4fdr")
+
+[node name="Petal2" type="Area2D" parent="."]
+position = Vector2(87.94, -42.27)
+rotation = 0.898119
+scale = Vector2(1, 1)
+collision_layer = 32768
+collision_mask = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Petal2"]
+texture_filter = 1
+texture = ExtResource("4_bgqkb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Petal2"]
+position = Vector2(0, 8)
+rotation = 0.217334
+shape = SubResource("CapsuleShape2D_y4fdr")
+
+[node name="Petal3" type="Area2D" parent="."]
+position = Vector2(-52.06, -82.27)
+rotation = -0.801089
+collision_layer = 32768
+collision_mask = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Petal3"]
+texture_filter = 1
+rotation = 0.450776
+texture = ExtResource("4_bgqkb")
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Petal3"]
+position = Vector2(0, 8)
+rotation = 0.217334
+shape = SubResource("CapsuleShape2D_y4fdr")
+
+[node name="Petal4" type="Area2D" parent="."]
+position = Vector2(-17.06, 91.73)
+rotation = 3.10866
+collision_layer = 32768
+collision_mask = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Petal4"]
+texture_filter = 1
+texture = ExtResource("4_bgqkb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Petal4"]
+position = Vector2(0, 8)
+rotation = 0.217334
+shape = SubResource("CapsuleShape2D_y4fdr")
+
+[node name="Petal5" type="Area2D" parent="."]
+position = Vector2(-85.06, 43.73)
+rotation = -2.2764
+collision_layer = 32768
+collision_mask = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Petal5"]
+texture_filter = 1
+texture = ExtResource("4_bgqkb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Petal5"]
+position = Vector2(0, 8)
+rotation = 0.217334
+shape = SubResource("CapsuleShape2D_y4fdr")
+
+[node name="Petal7" type="Area2D" parent="."]
+position = Vector2(-98.06, -21.27)
+rotation = -1.76039
+collision_layer = 32768
+collision_mask = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Petal7"]
+texture_filter = 1
+texture = ExtResource("4_bgqkb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Petal7"]
+position = Vector2(0, 8)
+rotation = 0.217334
+shape = SubResource("CapsuleShape2D_y4fdr")
+
+[node name="Petal6" type="Area2D" parent="."]
+position = Vector2(61.94, 80.73)
+rotation = 2.30757
+collision_layer = 32768
+collision_mask = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Petal6"]
+texture_filter = 1
+rotation = 0.450776
+texture = ExtResource("4_bgqkb")
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Petal6"]
+position = Vector2(0, 8)
+rotation = 0.217334
+shape = SubResource("CapsuleShape2D_y4fdr")
+
+[node name="Petal8" type="Area2D" parent="."]
+position = Vector2(97.94, 30.73)
+rotation = 1.72739
+collision_layer = 32768
+collision_mask = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Petal8"]
+texture_filter = 1
+rotation = 0.450776
+texture = ExtResource("4_bgqkb")
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Petal8"]
+position = Vector2(0, 8)
+rotation = 0.217334
+shape = SubResource("CapsuleShape2D_y4fdr")
+
+[node name="Petals" type="Node2D" parent="."]

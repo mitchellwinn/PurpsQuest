@@ -91,6 +91,8 @@ func checkForCommands(line,npc):
 		var linee= str(line.substr(6,-1))
 		if linee=="canDiveKick":
 			Keys.canDiveKick = true
+		elif linee=="canSlideKick":
+			Keys.canSlideKick = true
 		return true
 	return false
 	

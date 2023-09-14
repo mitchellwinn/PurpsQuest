@@ -3,6 +3,7 @@ extends Node
 const SAVE_PATH = "user://save_data.ini"
 
 var thisDelta = 0
+var shaking = 0
 
 @onready var currentTrack = get_node("/root/World/Music").stream
 @onready var player = get_node("/root/World/Player")
@@ -25,6 +26,7 @@ var swordColors = [Color("fdfdfd"),Color("a73700"),Color("e2e600"),Color("42d1f5
 var currentItem = "Chakram"
 var currentItemIndex = 0
 var inGameItems: Array
+var data := ConfigFile.new()
 
 signal nextFrame
 
@@ -34,12 +36,13 @@ func _ready():
 	#inGameItems.append(player.get_node("Knife"))
 	#inGameItems.append(player.get_node("BowArrow"))
 	#inGameItems.append(player.get_node("TetherShot"))
-	var data := ConfigFile.new()
 	data.load(SAVE_PATH)
 	if (data.has_section("player")):
 		#loadData(data)
 		pass
 	updateSwordColor()
+	if checkNoItems():
+		currentItem = "none"
 	updateCurrentItem()
 	markSaveLocation()
 
@@ -64,6 +67,7 @@ func saveData():
 	data.set_value("keys", "canWalljump", Keys.canWalljump)
 	data.set_value("keys", "canBackdash", Keys.canBackdash)
 	data.set_value("keys", "canDiveKick", Keys.canDiveKick)
+	data.set_value("keys", "canSlideKick", Keys.canSlideKick)
 	data.set_value("keys", "slimeBossFight", Keys.slimeBossFight)
 	data.set_value("keys", "swords", Keys.swords)
 	data.set_value("keys", "currentItem", General.currentItem)
@@ -71,7 +75,9 @@ func saveData():
 	data.set_value("npcs", "zorloro", get_node("/root/World/Map/Zorloro/NPC").dialogueTreeKey)
 	data.set_value("keys", "stickyGlove", Keys.stickyGlove)
 	data.set_value("keys", "sahagin", Keys.sahagin)
+	data.set_value("keys", "petalPeltFight", Keys.petalPeltFight)
 	data.save(SAVE_PATH)
+	ui.get_node("AnimationPlayer").play("GameSaved")
 	
 func loadData(data):
 	General.activeBG = activeCam.get_node(str(data.get_value("environment", "bg")))
@@ -81,6 +87,7 @@ func loadData(data):
 	Keys.canWalljump = data.get_value("keys", "canWalljump")
 	Keys.canBackdash = data.get_value("keys", "canBackdash")
 	Keys.canDiveKick = data.get_value("keys", "canDiveKick")
+	Keys.canDiveKick = data.get_value("keys", "canSlideKick")
 	Keys.slimeBossFight = data.get_value("keys", "slimeBossFight")
 	Keys.swords = data.get_value("keys", "swords")
 	General.currentItem = data.get_value("keys", "currentItem")
@@ -88,23 +95,28 @@ func loadData(data):
 	get_node("/root/World/Map/Zorloro/NPC").dialogueTreeKey = data.get_value("npcs", "zorloro")
 	Keys.stickyGlove = data.get_value("keys", "stickyGlove")
 	Keys.sahagin = data.get_value("keys", "sahagin")
+	Keys.petalPeltFight = data.get_value("keys", "petalPeltFight")
 	updateBackgrounds()
 	
 func screenImpact(shakeTime):
 	#print("impact")
+	shaking+=1
 	var time = 0
 	var Camera = playerCam
+	await nextFrame
 	Engine.time_scale = .1
-	while  time<shakeTime:
+	while  time<shakeTime and shaking == 1:
 		if time>0.025:
 			Engine.time_scale = 1.0
 		Camera.position.x = move_toward(Camera.position.x,sin(time*75)*2,2)
 		time+=thisDelta
 		await nextFrame
-	while  time<shakeTime+shakeTime/4:
+	while  time<shakeTime+shakeTime/4 and shaking == 1:
 		Camera.position.x = move_toward(Camera.position.x,0,2)
 		time+=thisDelta
 		await nextFrame
+	shaking-=1
+	Engine.time_scale = 1
 		
 func switchCameraTo(camTo,speed):
 	if switchingCamera:
@@ -163,8 +175,12 @@ func resetWorld():
 	if Keys.sahagin<1:
 		get_node("/root/World/Map/Sahagin1").usingAttack = false
 		get_node("/root/World/Map/Sahagin1/Stats").hp = get_node("/root/World/Map/Sahagin1/Stats").maxHP
-		
-
+	if Keys.petalPeltFight<1:
+		for petal in get_node("/root/World/Map/PetalPelt").petals:
+			petal.visible = true
+			petal.scale = Vector2.ONE
+		get_node("/root/World/Map/PetalPelt/Stats").hp = get_node("/root/World/Map/PetalPelt/Stats").maxHP
+	
 func updateSwordColor():
 	for obj in get_node("/root/World/Map/SwordUpgrades").get_children():
 		obj.get_node("Sprite2D").material.set_shader_parameter("T1",swordColors[Keys.swordStrength()+1])
@@ -186,13 +202,18 @@ func updateCurrentItem():
 	else:
 		pass
 
-func iterateCurrentItem():
+func checkNoItems():
 	var noItems = true
 	for n in Keys.items:
 		if n == 1:
 			noItems = false
-			break
-	if noItems:
+			return false
+	return true
+
+func iterateCurrentItem():
+	if checkNoItems():
+		currentItem = "none"
+		updateCurrentItem()
 		return
 	currentItemIndex+=1
 	if currentItemIndex>=Keys.items.size():

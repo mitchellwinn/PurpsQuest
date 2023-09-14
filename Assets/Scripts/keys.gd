@@ -1,13 +1,15 @@
 extends Node
 
 #abilities
-var canWalljump = false
+var canWalljump = true
 var canBackdash = false
 var canDiveKick = false
-var slimeBossFight = 0
+var canSlideKick = false
+var slimeBossFight = 2
+var petalPeltFight = 0
 var swords = [0,0,0,0,0,0,0,0,0,0]
-var items = [1,0,0,0,0]
-var stickyGlove = false
+var items = [0,1,0,0,0]
+var stickyGlove = true
 var sahagin = 0
 #item 0 : Chakram
 #item 1 : Axe
@@ -29,3 +31,9 @@ func swordStrength():
 	for s in swords:
 		str = str + s
 	return str
+
+func itemCount():
+	var amt= 0
+	for i in items:
+		amt = amt + i
+	return amt

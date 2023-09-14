@@ -25,7 +25,7 @@ func _ready():
 func _physics_process(delta):
 	if !usingAttack:
 		move(delta)
-		animate(1.5)
+	animate(1.5)
 	checkAggro()
 	checkDamage()
 	if aggro:
@@ -67,7 +67,7 @@ func decideDirection():
 	
 func attackPattern():
 	var time = 0
-	var waitTimer = rng.randf_range(2.0,6.0)
+	var waitTimer = rng.randf_range(1.0,3.0)
 	while time<waitTimer:
 		if aggro:
 			pass
@@ -101,25 +101,18 @@ func checkDamage():
 func lungeAttack():
 	if usingAttack:
 		return
+	invul = false
 	usingAttack = true
 	var timer = 0
-	var random = .5
+	var random = 1
 	while timer < random:
-		if timer<.25:
-			invul = false
-			usingAttack = true
-		else:
-			invul = true
-			if Time.get_ticks_msec()%10<5:
-				$Sprite.visible = false
-			else:
-				$Sprite.visible = true
-				$Sprite.modulate = Color(0,1,1,1)
+		usingAttack = true
 		timer+=General.thisDelta
 		if $AnimationPlayer.current_animation!=("raise"):
 			$AnimationPlayer.play("raise")
 		await nextFrame
 	timer = 0
+	invul = true
 	while timer < .8 and usingAttack:
 		velocity.x = -(aggro.global_position-global_position).normalized().x*(100*(.8-timer))
 		velocity.y += gravity * General.thisDelta
@@ -130,7 +123,7 @@ func lungeAttack():
 			$Sprite.modulate = Color(0,1,1,1)
 		timer+=General.thisDelta
 		if $AnimationPlayer.current_animation!=("wiggle"):
-			$AnimationPlayer.play("wiglle")
+			$AnimationPlayer.play("wiggle")
 		move_and_slide()
 		await nextFrame
 	$AnimationPlayer.play("lunge")
@@ -139,6 +132,7 @@ func lungeAttack():
 	$Sprite.visible = true
 	$Sprite.modulate = Color(1,1,1,1)
 	invul = false
+	stun = 0
 	while timer < .75 and usingAttack:
 		velocity.x = (aggro.global_position-global_position).normalized().x*(400*(.75-timer))
 		velocity.y += gravity * General.thisDelta
@@ -147,8 +141,8 @@ func lungeAttack():
 		else:
 			$HitBox/CollisionShape2D.disabled = true
 		timer+=General.thisDelta
-		if $AnimationPlayer.current_animation!=("wiggle"):
-			$AnimationPlayer.play("wiglle")
+		if $AnimationPlayer.current_animation!=("lunge"):
+			$AnimationPlayer.play("lunge")
 		move_and_slide()
 		await nextFrame
 	usingAttack = false

@@ -1,8 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://y4w2384cockm"]
+[gd_scene load_steps=9 format=3 uid="uid://d014sgclvurq1"]
 
-[ext_resource type="Script" path="res://Assets/Scripts/Bat.gd" id="1_daaps"]
-[ext_resource type="Texture2D" uid="uid://w2imaemlwsb8" path="res://Assets/2D/bat-Sheet.png" id="2_sqvjq"]
-[ext_resource type="Script" path="res://Assets/Scripts/Stats.gd" id="3_20bdu"]
+[ext_resource type="Script" path="res://Assets/Scripts/Fish.gd" id="1_vr4tf"]
+[ext_resource type="Texture2D" uid="uid://co7kum8tqy4ks" path="res://Assets/2D/fishSheet.png" id="2_dqjpo"]
+[ext_resource type="Script" path="res://Assets/Scripts/Stats.gd" id="3_aj836"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yober"]
 size = Vector2(13.94, 16.27)
@@ -12,6 +12,7 @@ size = Vector2(19.6891, 8.7156)
 
 [sub_resource type="Animation" id="Animation_yor67"]
 resource_name = "fly"
+length = 0.4
 loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -20,10 +21,10 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.4),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [1, 5]
+"values": [0, 2]
 }
 
 [sub_resource type="Animation" id="Animation_atbdk"]
@@ -38,28 +39,27 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
+"values": [1]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_utjeu"]
 _data = {
-"fly": SubResource("Animation_yor67"),
-"hang": SubResource("Animation_atbdk")
+"sleep": SubResource("Animation_atbdk"),
+"swim": SubResource("Animation_yor67")
 }
 
 [node name="Bat" type="CharacterBody2D"]
 position = Vector2(2.06, -18.73)
 collision_layer = 32768
 collision_mask = 0
-script = ExtResource("1_daaps")
+script = ExtResource("1_vr4tf")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 z_index = 500
 texture_filter = 1
-position = Vector2(-2.06, 5.73)
-texture = ExtResource("2_sqvjq")
-hframes = 6
-frame = 5
+position = Vector2(-1.06, 9.73)
+texture = ExtResource("2_dqjpo")
+hframes = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2.06, 10.865)
@@ -76,7 +76,7 @@ shape = SubResource("RectangleShape2D_471p6")
 debug_color = Color(0.980392, 0, 0.380392, 0.419608)
 
 [node name="Stats" type="Node" parent="."]
-script = ExtResource("3_20bdu")
+script = ExtResource("3_aj836")
 maxHP = 1
 hp = 1
 damage = 3

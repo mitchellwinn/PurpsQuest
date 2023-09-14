@@ -36,7 +36,7 @@ func _on_area_2d_area_entered(area):
 		General.screenImpact(.2)
 		area.get_parent().get_node("SFXslash").play()
 		
-		while charged<4.5 and get_node("/root/World/Map/Slimecore"):
+		while charged<10 and get_node("/root/World/Map/Slimecore"):
 			get_node("/root/World/Map/Slimecore/Shock").play()
 			get_node("/root/World/Map/Slimecore").global_position = get_node("/root/World/Map/Slimecore").origin
 			get_node("/root/World/Map/Slimecore").stun = .25

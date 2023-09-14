@@ -2,6 +2,7 @@ extends Area2D
 
 
 @export var vertical: bool
+@export var outsideLeft:bool
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -20,10 +21,16 @@ func _on_body_exited(body):
 				General.activeBG = General.bg2
 			else:
 				General.activeBG = General.bg1
-		else:
+		elif !outsideLeft:
 			if body.global_position.x>global_position.x:
 				General.activeBG = General.bg1
 			else:
 				General.activeBG = General.bg2
+		else:
+			if body.global_position.x>global_position.x:
+				General.activeBG = General.bg2
+			else:
+				General.activeBG = General.bg1
+	
 		General.updateBackgrounds()
 
