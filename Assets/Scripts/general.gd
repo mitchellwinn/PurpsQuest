@@ -22,7 +22,7 @@ var switchingCamera = false
 var fileExists = false
 var saveLocation = Vector3.ZERO
 var saveLocationBG
-var swordColors = [Color("fdfdfd"),Color("a73700"),Color("e2e600"),Color("42d1f5")]
+var swordColors = [Color("fdfdfd"),Color("a73700"),Color("e2e600"),Color("00ff00"),Color("42d1f5"),Color("000fdb"),Color("bf00bc"),Color("ffbf00"),Color("ff0000"),Color("ae00ff")]
 var currentItem = "Chakram"
 var currentItemIndex = 0
 var inGameItems: Array

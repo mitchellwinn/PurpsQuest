@@ -278,17 +278,18 @@ func slash(delta):
 	var initialFlip = $Guy.flip_h
 	while(timer<.75 and usingAttack):
 		$Guy/Afterimage.emitting = true
-		if timer>.1 and timer<.4:
+		if timer>.05 and timer<.5:
 			#$SlashHitbox.scale.x = $SlashHitbox.scale.x*700
 			$SlashHitbox/CollisionShape2D.disabled = false
-			velocity.x = dir.x * decaySpeed/10
-		timer+=delta*(1+Keys.swordStrength()/4)
+		timer+=delta
+		velocity.x = dir.x * decaySpeed/10
 		decaySpeed-=(delta*SPEED/3)
 		if decaySpeed<0:
 			decaySpeed = 0
-		if timer>.4 and hitConfirm and PlayerInputs.attack:
+		if timer>.5 and hitConfirm and PlayerInputs.attack:
 			timer = 0
 			hitConfirm = false
+			decaySpeed = SPEED
 			$AnimationPlayer.seek(0)
 		await nextFrame
 		#move_and_slide()
@@ -314,13 +315,14 @@ func lunge(delta):
 	var initialFlip = $Guy.flip_h
 	while(timer<.75 and usingAttack):
 		velocity.x = dir.x * decaySpeed
-		timer+=delta*(1+Keys.swordStrength()/4)
+		timer+=delta
 		decaySpeed-=(delta*SPEED/3)
 		#$LungeHitbox.scale.x = $LungeHitbox.scale.x*1000
 		$LungeHitbox/CollisionShape2D.disabled = false
 		if timer>.4 and hitConfirm and PlayerInputs.attack:
 			timer = 0
 			hitConfirm = false
+			decaySpeed = SPEED
 			$AnimationPlayer.seek(0)
 		await nextFrame
 	$Guy/Afterimage.emitting = false
@@ -353,7 +355,7 @@ func slideKick(delta):
 			direction = direction*-1
 			$Guy.flip_h = !$Guy.flip_h
 		velocity.x = dir.x * decaySpeed * 3 * dir2
-		timer+=delta*(1+Keys.swordStrength()/4)
+		timer+=delta
 		decaySpeed-=(delta*SPEED)
 		#$LungeHitbox.scale.x = $LungeHitbox.scale.x*1000
 		if $CrouchCast.is_colliding():
