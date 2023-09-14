@@ -266,7 +266,7 @@ func moonwalk(delta):
 	usingSpecialMove = false
 	
 func slash(delta):
-	if !hasControl():
+	if !hasControl() or usingAttack:
 		return
 	currentAttack = "slash"
 	usingAttack = true
@@ -281,7 +281,7 @@ func slash(delta):
 		if timer>.05 and timer<.5:
 			#$SlashHitbox.scale.x = $SlashHitbox.scale.x*700
 			$SlashHitbox/CollisionShape2D.disabled = false
-		timer+=delta
+		timer+=delta*(1+Keys.swordStrength()/4)
 		velocity.x = dir.x * decaySpeed/10
 		decaySpeed-=(delta*SPEED/3)
 		if decaySpeed<0:
@@ -291,6 +291,7 @@ func slash(delta):
 			hitConfirm = false
 			decaySpeed = SPEED
 			$AnimationPlayer.seek(0)
+			continue
 		await nextFrame
 		#move_and_slide()
 	$Guy/Afterimage.emitting = false
@@ -315,7 +316,7 @@ func lunge(delta):
 	var initialFlip = $Guy.flip_h
 	while(timer<.75 and usingAttack):
 		velocity.x = dir.x * decaySpeed
-		timer+=delta
+		timer+=delta*(1+Keys.swordStrength()/4)
 		decaySpeed-=(delta*SPEED/3)
 		#$LungeHitbox.scale.x = $LungeHitbox.scale.x*1000
 		$LungeHitbox/CollisionShape2D.disabled = false

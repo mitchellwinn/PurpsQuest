@@ -42,12 +42,12 @@ func _on_body_entered(body):
 		General.cutsceneActive = false
 	if General.checkNoItems():
 		General.iterateCurrentItem()
-	if Keys.itemCount()==1 and item != "SitckyGlove":
+	if Keys.itemCount()==1 and item != "SitckyGlove" and get_parent().name!="SwordUpgrades":
 		get_node("/root/World/GeneralText").interaction = 0
 		get_node("/root/World/GeneralText").dialogueTreeKey= 1
 		get_node("/root/World/TextPrinter").stream = load("res://Assets/SFX/signText.wav")
 		TextEngine.go(get_node("/root/World/GeneralText"))
-	if Keys.swordStrength()==1:
+	if Keys.swordStrength()==1 and get_parent().name=="SwordUpgrades":
 		get_node("/root/World/GeneralText").interaction = 0
 		get_node("/root/World/GeneralText").dialogueTreeKey= 2
 		get_node("/root/World/TextPrinter").stream = load("res://Assets/SFX/signText.wav")

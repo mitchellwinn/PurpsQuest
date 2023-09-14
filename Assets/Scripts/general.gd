@@ -176,6 +176,7 @@ func resetWorld():
 		get_node("/root/World/Map/Sahagin1").usingAttack = false
 		get_node("/root/World/Map/Sahagin1/Stats").hp = get_node("/root/World/Map/Sahagin1/Stats").maxHP
 	if Keys.petalPeltFight<1:
+		get_node("/root/World/Map/PetalPelt").aggro = null
 		for petal in get_node("/root/World/Map/PetalPelt").petals:
 			petal.visible = true
 			petal.scale = Vector2.ONE

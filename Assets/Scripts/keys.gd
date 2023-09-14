@@ -1,14 +1,14 @@
 extends Node
 
 #abilities
-var canWalljump = true
+var canWalljump = false
 var canBackdash = false
 var canDiveKick = false
 var canSlideKick = false
-var slimeBossFight = 2
+var slimeBossFight = 0
 var petalPeltFight = 0
 var swords = [0,0,0,0,0,0,0,0,0,0]
-var items = [0,1,0,0,0]
+var items = [0,0,0,0,0]
 var stickyGlove = true
 var sahagin = 0
 #item 0 : Chakram

@@ -195,3 +195,27 @@ func spawn():
 	else:
 		return
 	thisSpawn.suspension = .5
+
+func die():
+	if $Stats.hp<0 and !dead:
+		var i = 0
+		for slime in spawns:
+			slime.stats.hp = 0
+			i+=1
+		var rng = RandomNumberGenerator.new()
+		var explode = load(deathParticle)
+		dead=true
+		await get_tree().create_timer(.1*deathLength).timeout
+		for n in range(deathLength):
+			General.screenImpact(.08)
+			var thisexplode = explode.instantiate()
+			get_node("/root/World").add_child(thisexplode)
+			thisexplode.global_position = global_position+RandomNumberGenerator.new().randi_range(-10,10)*deathLength*Vector2(1,1)
+			thisexplode = explode.instantiate()
+			get_node("/root/World").add_child(thisexplode)
+			thisexplode.global_position = global_position+Vector2(rng.randi_range(-10,10)*deathLength,rng.randi_range(-10,10)*deathLength)
+			await get_tree().create_timer(.1).timeout
+		if get_node("Item"):
+			var key = $Item
+			dropItem(key)
+		queue_free()

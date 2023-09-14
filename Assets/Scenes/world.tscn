@@ -7645,7 +7645,7 @@ metadata/_edit_horizontal_guides_ = []
 [node name="UI" parent="." instance=ExtResource("1_s0ty4")]
 
 [node name="Player" parent="." instance=ExtResource("6_ojrw8")]
-position = Vector2(-1893, -493)
+position = Vector2(-2973, 563)
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStream_o1mnj")
@@ -8850,7 +8850,7 @@ delay = 0.1
 position = Vector2(-2162, -468)
 collision_mask = 2
 script = ExtResource("11_qmjgk")
-swordIndex = 1
+swordIndex = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map/SwordUpgrades/3"]
 shape = SubResource("RectangleShape2D_qc0l1")
@@ -8867,7 +8867,7 @@ delay = 0.1
 position = Vector2(-2118, -468)
 collision_mask = 2
 script = ExtResource("11_qmjgk")
-swordIndex = 1
+swordIndex = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map/SwordUpgrades/4"]
 shape = SubResource("RectangleShape2D_qc0l1")
@@ -8884,7 +8884,7 @@ delay = 0.1
 position = Vector2(-2069, -468)
 collision_mask = 2
 script = ExtResource("11_qmjgk")
-swordIndex = 1
+swordIndex = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map/SwordUpgrades/5"]
 shape = SubResource("RectangleShape2D_qc0l1")
@@ -8901,7 +8901,7 @@ delay = 0.1
 position = Vector2(-2023, -468)
 collision_mask = 2
 script = ExtResource("11_qmjgk")
-swordIndex = 1
+swordIndex = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map/SwordUpgrades/6"]
 shape = SubResource("RectangleShape2D_qc0l1")
@@ -8918,7 +8918,7 @@ delay = 0.1
 position = Vector2(-1974, -468)
 collision_mask = 2
 script = ExtResource("11_qmjgk")
-swordIndex = 1
+swordIndex = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map/SwordUpgrades/7"]
 shape = SubResource("RectangleShape2D_qc0l1")
