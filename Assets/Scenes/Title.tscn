@@ -1,0 +1,83 @@
+[gd_scene load_steps=10 format=3 uid="uid://e3d1ifkjp426"]
+
+[ext_resource type="Texture2D" uid="uid://bu6yxvweygb80" path="res://Assets/2D/title.png" id="1_0ga5n"]
+[ext_resource type="Script" path="res://Assets/Scripts/Title.gd" id="2_anxm7"]
+[ext_resource type="Shader" path="res://Assets/Shader/wiggle.gdshader" id="3_rmxsd"]
+[ext_resource type="FontFile" uid="uid://cg3s0857g2kwc" path="res://Assets/Font/ancientbold.fnt" id="4_xv4dr"]
+[ext_resource type="FontFile" uid="uid://tmtcwha3saq0" path="res://Assets/Font/ancientitalics.fnt" id="5_rkljd"]
+[ext_resource type="AudioStream" uid="uid://ufk4dixoahel" path="res://Assets/Music/BoomStickBox.mp3" id="6_n4q08"]
+[ext_resource type="AudioStream" uid="uid://dmydbcpc7txlb" path="res://Assets/SFX/FNF_EBA_fx_misc_jump_quick.wav" id="7_ns62f"]
+[ext_resource type="AudioStream" uid="uid://byic6jufk4s4r" path="res://Assets/SFX/ESM_Cool_Positive_Game_item_22_Sound_FX_Arcade_Casino_Kids_Mobile_Positive_Achievement_Score_Jewel.wav" id="7_sa0u5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5lv71"]
+shader = ExtResource("3_rmxsd")
+shader_parameter/Strength = 0.0
+shader_parameter/RandomOffset = 1.0
+
+[node name="Title" type="Node2D"]
+
+[node name="Title" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(240, 135)
+texture = ExtResource("1_0ga5n")
+script = ExtResource("2_anxm7")
+
+[node name="New" type="RichTextLabel" parent="Title"]
+z_index = 1
+texture_filter = 3
+material = SubResource("ShaderMaterial_5lv71")
+clip_contents = false
+offset_left = 69.0
+offset_top = 6.0
+offset_right = 522.0
+offset_bottom = 97.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_xv4dr")
+theme_override_fonts/italics_font = ExtResource("5_rkljd")
+bbcode_enabled = true
+text = "New Game"
+
+[node name="Continue" type="RichTextLabel" parent="Title"]
+z_index = 1
+texture_filter = 3
+material = SubResource("ShaderMaterial_5lv71")
+clip_contents = false
+offset_left = 69.0
+offset_top = 37.0
+offset_right = 522.0
+offset_bottom = 128.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_xv4dr")
+theme_override_fonts/italics_font = ExtResource("5_rkljd")
+bbcode_enabled = true
+text = "Continue
+"
+
+[node name="Quit" type="RichTextLabel" parent="Title"]
+z_index = 1
+texture_filter = 3
+material = SubResource("ShaderMaterial_5lv71")
+clip_contents = false
+offset_left = 69.0
+offset_top = 67.0
+offset_right = 522.0
+offset_bottom = 158.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_xv4dr")
+theme_override_fonts/italics_font = ExtResource("5_rkljd")
+bbcode_enabled = true
+text = "Quit
+"
+
+[node name="menusound" type="AudioStreamPlayer" parent="Title"]
+stream = ExtResource("7_ns62f")
+volume_db = -15.0
+
+[node name="menusound2" type="AudioStreamPlayer" parent="Title"]
+stream = ExtResource("7_sa0u5")
+volume_db = -5.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_n4q08")
+volume_db = -5.0
+autoplay = true

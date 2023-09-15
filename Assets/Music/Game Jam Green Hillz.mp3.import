@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dybxbice06drr"
+path="res://.godot/imported/Game Jam Green Hillz.mp3-a584d1cb5a45450ffd05b585a0b77767.mp3str"
+
+[deps]
+
+source_file="res://Assets/Music/Game Jam Green Hillz.mp3"
+dest_files=["res://.godot/imported/Game Jam Green Hillz.mp3-a584d1cb5a45450ffd05b585a0b77767.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
