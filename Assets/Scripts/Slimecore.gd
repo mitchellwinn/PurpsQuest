@@ -164,7 +164,7 @@ func slimeSpit():
 	$AnimationPlayer.play("spit")
 	await get_tree().create_timer(1).timeout
 	var timer = 0
-	while timer < .4:
+	while timer < .4 and usingAttack and !General.player.dead:
 		if Time.get_ticks_msec()%20<10:
 			$Sprite.visible = false
 		else:
@@ -175,7 +175,7 @@ func slimeSpit():
 	$Sprite.visible = true
 	$Sprite.modulate = Color(.5,.5,1,1)
 	var sizer = spawns.size()
-	while spawns.size()<clamp(sizer,1,3) and usingAttack:
+	while spawns.size()<clamp(sizer,1,3) and usingAttack and !General.player.dead:
 		spawn()
 		await get_tree().create_timer(.5).timeout
 	if spawns.size()<4 and usingAttack:

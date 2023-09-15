@@ -1,5 +1,7 @@
 extends Area2D
 
+@export var bgm : String
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -13,5 +15,7 @@ func _process(delta):
 
 func _on_body_entered(body):
 	General.markSaveLocation()
-	General.saveData()
-	
+	if General.saveTimer<=0:
+		General.saveData()
+		General.saveTimer=15
+	General.bgm = load(bgm)

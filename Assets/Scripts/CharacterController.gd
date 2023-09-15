@@ -155,7 +155,10 @@ func whichWall():
 		return "left"
 
 func lerp_camera_offset():
-		General.playerCam.position.y = lerp(General.playerCam.position.y,float(distance_to_floor/10)-50,.05)
+	if General.cutsceneActive:
+		return
+	print("bitch")
+	General.playerCam.position.y = lerp(General.playerCam.position.y,float(distance_to_floor/10)-50,.05)
 	
 func hasControl():
 	if !TextEngine.messageStatus and !usingSpecialMove and !usingAttack and stun<=0 and !dead and !General.cutsceneActive:
@@ -558,8 +561,6 @@ func die():
 		$Guy.self_modulate = Color(0,0,0,1)
 		var confirm = false
 		timer = 0
-		get_node("/root/World/GeneralText").dialogueTreeKey = 0
-		get_node("/root/World/GeneralText").interaction = 0
 		get_node("/root/World/UI/TextBox/Text").get_material().set_shader_parameter("Strength",2)
 		get_node("/root/World/GeneralText").interaction = 0
 		get_node("/root/World/GeneralText").dialogueTreeKey= 0

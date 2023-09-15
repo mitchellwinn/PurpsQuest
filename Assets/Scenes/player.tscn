@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://bo385lwfd1k55"]
+[gd_scene load_steps=43 format=3 uid="uid://bo385lwfd1k55"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/CharacterController.gd" id="1_g154f"]
 [ext_resource type="Texture2D" uid="uid://pdangxv02m6y" path="res://Assets/2D/metroidvaniaCharacter-Sheet.png" id="2_ecvop"]
@@ -7,11 +7,7 @@
 [ext_resource type="Script" path="res://Assets/Scripts/AfterImage/Afterimage_Entity.gd" id="5_a2i8s"]
 [ext_resource type="Shader" path="res://Assets/Shader/PaletteSwap/changeColorTo.gdshader" id="6_4w6bk"]
 [ext_resource type="Script" path="res://Assets/Scripts/Stats.gd" id="7_eo6ev"]
-[ext_resource type="Texture2D" uid="uid://cgl36udlwxiir" path="res://Assets/2D/firebg-Sheet.png" id="7_jf1ip"]
 [ext_resource type="AudioStream" uid="uid://v0a0bvkpe2yy" path="res://Assets/SFX/slash.wav" id="7_lsp1b"]
-[ext_resource type="Shader" path="res://Assets/Shader/PaletteSwap/12stepPaletteSwap.gdshader" id="8_aogte"]
-[ext_resource type="Texture2D" uid="uid://eff4f4lvuuf" path="res://Assets/2D/bg1.png" id="9_8a6u6"]
-[ext_resource type="Texture2D" uid="uid://dfga3jg5x1kxb" path="res://Assets/2D/bg1-Sheet-export.png" id="10_jq2dp"]
 [ext_resource type="Script" path="res://Assets/Scripts/FrameScroll.gd" id="11_kgxp2"]
 [ext_resource type="Texture2D" uid="uid://ktu80cvrdsk1" path="res://Assets/2D/thornchakramSHeet.png" id="14_81a6g"]
 [ext_resource type="Script" path="res://Assets/Scripts/Chakram.gd" id="14_ocbnj"]
@@ -78,61 +74,6 @@ viewport_path = NodePath("Guy/SubViewport")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3upc0"]
 size = Vector2(8, 45)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_43v00"]
-shader = ExtResource("6_4w6bk")
-shader_parameter/numberOfColors = 3
-shader_parameter/C1 = Color(0.996094, 0.503906, 0.453125, 1)
-shader_parameter/C2 = Color(0.273438, 0.0546875, 0.167969, 1)
-shader_parameter/C3 = Color(0.484375, 0.09375, 0.234375, 1)
-shader_parameter/C4 = Color(0, 0, 0.156863, 1)
-shader_parameter/C5 = Color(0, 0, 0, 1)
-shader_parameter/C6 = Color(0, 0, 0.266667, 1)
-shader_parameter/T1 = Color(1, 1, 1, 1)
-shader_parameter/T2 = null
-shader_parameter/T3 = null
-shader_parameter/T4 = null
-shader_parameter/T5 = null
-shader_parameter/T6 = null
-
-[sub_resource type="Animation" id="Animation_sh4df"]
-resource_name = "burn"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0, 19]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_u4o50"]
-_data = {
-"burn": SubResource("Animation_sh4df")
-}
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_67ici"]
-shader = ExtResource("8_aogte")
-shader_parameter/lowestR = 0.118
-shader_parameter/highestR = 0.308
-shader_parameter/numberOfColors = 3
-shader_parameter/C1 = Color(0, 0, 0, 1)
-shader_parameter/C2 = Color(0.188235, 0.0431373, 0.372549, 1)
-shader_parameter/C3 = Color(0.243137, 0.00392157, 0.2, 1)
-shader_parameter/C4 = Color(0, 0, 0.156863, 1)
-shader_parameter/C5 = Color(0, 0, 0, 1)
-shader_parameter/C6 = Color(0, 0, 0.266667, 1)
-shader_parameter/C7 = Color(0, 0, 0, 1)
-shader_parameter/C8 = null
-shader_parameter/C9 = null
-shader_parameter/C10 = null
-shader_parameter/C11 = null
-shader_parameter/C12 = null
 
 [sub_resource type="Animation" id="Animation_mygyh"]
 resource_name = "airSlashleft"
@@ -1131,7 +1072,6 @@ texture_filter = 1
 material = SubResource("ShaderMaterial_i2x54")
 texture = ExtResource("2_ecvop")
 hframes = 72
-frame = 65
 
 [node name="CapeHolder" type="Node2D" parent="Guy"]
 position = Vector2(0, -9)
@@ -1179,41 +1119,6 @@ script = ExtResource("5_a2i8s")
 position = Vector2(0.5, 19)
 scale = Vector2(1, 0.2)
 shape = SubResource("RectangleShape2D_3upc0")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, -81)
-position_smoothing_speed = 15.0
-
-[node name="flames" type="Sprite2D" parent="Camera2D"]
-visible = false
-z_index = -10
-texture_filter = 1
-material = SubResource("ShaderMaterial_43v00")
-texture = ExtResource("7_jf1ip")
-hframes = 20
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D/flames"]
-speed_scale = 2.54
-libraries = {
-"": SubResource("AnimationLibrary_u4o50")
-}
-
-[node name="Bg1" type="Sprite2D" parent="Camera2D"]
-z_index = -2000
-texture_filter = 1
-material = SubResource("ShaderMaterial_67ici")
-texture = ExtResource("9_8a6u6")
-
-[node name="Bg2" type="Sprite2D" parent="Camera2D"]
-visible = false
-modulate = Color(0.745098, 0.745098, 0.745098, 1)
-z_index = -2000
-texture_filter = 1
-position = Vector2(0, -81)
-texture = ExtResource("10_jq2dp")
-hframes = 4
-script = ExtResource("11_kgxp2")
-delay = 0.1
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 position = Vector2(0, 22)

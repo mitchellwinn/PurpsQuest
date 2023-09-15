@@ -4,11 +4,11 @@ signal done
 signal next
 var messageStatus = false
 var target = null
-@onready var currentTrack = get_node("/root/World/Music").stream
+var currentTrack
 var NPC
-@onready var ui = get_node("/root/World/UI")
-@onready var defaultTextWidth = ui.get_node("TextBox/Text").size
-@onready var defaultTextPos = ui.get_node("TextBox/Text").position
+var ui
+var defaultTextWidth
+var defaultTextPos
 var face = null
 
 
@@ -22,6 +22,10 @@ func _physics_process(delta):
 			next.emit()
 
 func go(npc):
+	currentTrack = get_node("/root/World/Music").stream
+	ui = get_node("/root/World/UI")
+	defaultTextWidth = ui.get_node("TextBox/Text").size
+	defaultTextPos = ui.get_node("TextBox/Text").position
 	if !face:
 			ui.get_node("TextBox/Face").visible = false
 			ui.get_node("TextBox/Text").size = defaultTextWidth

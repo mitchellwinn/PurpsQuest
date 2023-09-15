@@ -176,6 +176,7 @@ func petalDie(petal):
 
 func die():
 	if $Stats.hp<0 and !dead:
+		Keys.petalPeltFight=1
 		print ("called die")
 		var rng = RandomNumberGenerator.new()
 		var explode = load(deathParticle)

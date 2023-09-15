@@ -2,21 +2,22 @@ extends Node
 
 const SAVE_PATH = "user://save_data.ini"
 
+var bgm
 var thisDelta = 0
 var shaking = 0
-
-@onready var currentTrack = get_node("/root/World/Music").stream
-@onready var player = get_node("/root/World/Player")
-@onready var playerCam = player.get_node("Camera2D")
-@onready var activeCam = playerCam
-@onready var slimeBossCam = get_node("/root/World/Map/SlimeBoss/Camera2D")
-@onready var bg1 = playerCam.get_node("Bg1")
-@onready var bg2 = playerCam.get_node("Bg2")
-@onready var flames = playerCam.get_node("flames")
-var cutsceneActive = false
-@onready var activeBG = bg1
-@onready var ui = get_node("/root/World/UI")
+var saveTimer = 0
+var currentTrack
+var player 
+var playerCam 
+var activeCam = playerCam
+var slimeBossCam
+var bg1 
+var bg2 
+var flames
+var activeBG 
+var ui 
 var animatorOn = true
+var cutsceneActive = false
 var itemResolved = true
 var switchingCamera = false
 var fileExists = false
@@ -30,25 +31,69 @@ var data := ConfigFile.new()
 
 signal nextFrame
 
-func _ready():
+func getReady():
+	await nextFrame
+	get_node("/root/World/Music").stream
+	player = get_node("/root/World/Player")
+	playerCam = player.get_node("Camera2D")
+	activeCam = playerCam
+	slimeBossCam = get_node("/root/World/Map/SlimeBoss/Camera2D")
+	bg1 = playerCam.get_node("Bg1")
+	bg2 = playerCam.get_node("Bg2")
+	flames = playerCam.get_node("flames")
+	activeBG = bg1
+	ui = get_node("/root/World/UI")
 	inGameItems.append(player.get_node("Chakram"))
 	inGameItems.append(player.get_node("Axe"))
 	#inGameItems.append(player.get_node("Knife"))
 	#inGameItems.append(player.get_node("BowArrow"))
 	#inGameItems.append(player.get_node("TetherShot"))
 	data.load(SAVE_PATH)
-	if (data.has_section("player")):
-		#loadData(data)
-		pass
+	#print("check")
+	
+	if loadData(data):
+		#print("loadeddata")
+		pass#normal procedure
+	else:
+		#print("nmodaata")
+		cutscene()
 	updateSwordColor()
 	if checkNoItems():
 		currentItem = "none"
 	updateCurrentItem()
-	markSaveLocation()
+	
+func cutscene():
+	#print("play-1")
+	await get_tree().process_frame
+	await get_tree().create_timer(.1).timeout
+	cutsceneActive = true
+	#print("play0")
+	get_node("/root/World/Cutscenes").play("opening1")
+	#print("play1")
+	await get_tree().create_timer(4.1).timeout
+	get_node("/root/World/GeneralText").interaction = 0
+	get_node("/root/World/GeneralText").dialogueTreeKey= 3
+	get_node("/root/World/TextPrinter").stream = load("res://Assets/SFX/signText.wav")
+	TextEngine.go(get_node("/root/World/GeneralText"))
+	while Vector2(round(player.position.x),round(player.position.y)) == Vector2(floor(6449),floor(-364)):
+		player.position = Vector2(floor(6449),floor(-364))
+		await get_tree().process_frame
+	print(player.position)
+	cutsceneActive = false
+	
 
 func _physics_process(delta):
+	if bgm:	
+		if get_node("/root/World/Music").stream != bgm:
+			get_node("/root/World/Music").stream = bgm
+			get_node("/root/World/Music").play()
 	thisDelta = delta
 	nextFrame.emit()
+	if get_tree().current_scene.name == "Title":
+		return
+	saveTimer-=delta
+	if saveTimer<0:
+		saveTimer=0
 	#print(activeCam.get_parent().name)
 	if activeCam.get_parent().name=="SlimeBoss":
 		activeCam.global_position.x = player.global_position.x
@@ -58,8 +103,20 @@ func _physics_process(delta):
 		if PlayerInputs.swap:
 			iterateCurrentItem()
 
+func clearData():
+	data.load(SAVE_PATH)
+	data.clear()
+	data.save(SAVE_PATH)
+	
+func checkData():
+	data.load(SAVE_PATH)
+	if !data.has_section("player"):
+		return false
+	return true
+
 func saveData():
-	var data := ConfigFile.new()
+	#markSaveLocation()
+	data = ConfigFile.new()
 	data.set_value("environment", "bg", General.activeBG.name)
 	data.set_value("environment", "saveLocationBG", General.saveLocationBG.name)
 	data.set_value("player", "position", player.global_position)
@@ -80,6 +137,10 @@ func saveData():
 	ui.get_node("AnimationPlayer").play("GameSaved")
 	
 func loadData(data):
+	if !checkData():
+		return false
+	ui.get_node("BlackScreen").modulate = Color(1,1,1,0)
+	get_node("/root/World/StartingCutsceneStuff").position = Vector2(9999,9999)
 	General.activeBG = activeCam.get_node(str(data.get_value("environment", "bg")))
 	General.saveLocationBG = activeCam.get_node(str(data.get_value("environment", "saveLocationBG")))
 	player.global_position = data.get_value("player", "position")
@@ -97,7 +158,7 @@ func loadData(data):
 	Keys.sahagin = data.get_value("keys", "sahagin")
 	Keys.petalPeltFight = data.get_value("keys", "petalPeltFight")
 	updateBackgrounds()
-	
+	return true
 func screenImpact(shakeTime):
 	#print("impact")
 	shaking+=1
@@ -149,7 +210,6 @@ func switchCameraTo(camTo,speed):
 	flames.position = Vector2.ZERO
 	switchingCamera = false
 	
-		
 func markSaveLocation():
 	saveLocation = player.global_position
 	saveLocationBG = activeBG

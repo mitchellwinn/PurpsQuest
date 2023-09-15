@@ -5,6 +5,8 @@ var left = false
 var jump = false
 var up = false
 var down = false
+var tapUp = false
+var tapDown = false
 var tapJump = false
 var attack = false
 var extraAction = false
@@ -38,6 +40,16 @@ func _physics_process(delta):
 		inputs += "down, "
 	else:
 		down = false	
+	if Input.is_action_just_pressed("up"):
+		tapUp = true
+		inputs += "tapUp, "
+	else:
+		tapUp = false	
+	if Input.is_action_just_pressed("down"):
+		tapDown = true
+		inputs += "tapDown, "
+	else:
+		tapDown = false	
 	if Input.is_action_pressed("jump"):
 		jump = true
 		inputs += "jump, "
